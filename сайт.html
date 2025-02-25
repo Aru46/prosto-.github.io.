@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пример сайта с шапочкой</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Общие стили */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            transition: background-color 0.3s ease;
+            color: #333;
+        }
+
+        /* Шапочка */
+        .header {
+            background-color: #333;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: top 0.3s ease-in-out, background-color 0.3s ease;
+        }
+
+        /* Кнопки меню */
+        .header button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        /* Эффект наведения на кнопки */
+        .header button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        /* Активная кнопка */
+        .header button.active {
+            background-color: #28a745;
+        }
+
+        /* Подменю */
+        .menu-item {
+            position: relative;
+        }
+
+        .sub-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #333;
+            color: white;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            padding: 10px;
+            z-index: 1;
+            min-width: 150px;
+        }
+
+        .menu-item:hover .sub-menu {
+            display: block;
+        }
+
+        .sub-menu button {
+            display: block;
+            width: 100%;
+            text-align: left;
+            margin: 5px 0;
+        }
+
+        /* Адаптивность для мобильных экранов */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .header button {
+                margin-bottom: 10px;
+            }
+
+            .header button.active {
+                background-color: #ff9800;
+            }
+
+            .sub-menu {
+                position: static;
+                display: none;
+                padding-left: 20px;
+                background-color: transparent;
+                box-shadow: none;
+            }
+
+            .menu-item:hover .sub-menu {
+                display: block;
+            }
+
+            .sub-menu button {
+                background-color: #007bff;
+            }
+        }
+
+        /* Стиль для темы */
+        .dark-theme {
+            background-color: #121212;
+            color: white;
+        }
+
+        .dark-theme .header {
+            background-color: #1c1c1c;
+        }
+
+        .dark-theme .header button,
+        .dark-theme .sub-menu button {
+            background-color: #ff5722;
+            color: white;
+        }
+
+        .dark-theme .header button:hover,
+        .dark-theme .sub-menu button:hover {
+            background-color: #e64a19;
+        }
+
+        /* Контент */
+        .content {
+            padding: 20px;
+            text-align: center;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .content h1 {
+            color: #333;
+        }
+
+        .dark-theme .content h1 {
+            color: #fff;
+        }
+
+        /* Иконки соцсетей */
+        .social-icons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 24px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #ff9800;
+        }
+
+        .dark-theme .social-icons a {
+            color: #fff;
+        }
+
+        .dark-theme .social-icons a:hover {
+            color: #ff9800;
+        }
+
+        /* Область контента */
+        #contentArea {
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            text-align: left;
+        }
+
+        .dark-theme #contentArea {
+            background-color: #333;
+            border-color: #555;
+            color: #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Шапочка сайта -->
+    <div class="header">
+        <button data-section="home" class="active">Главная</button>
+        <button data-section="about">О нас</button>
+
+        <div class="menu-item">
+            <button>Услуги</button>
+            <div class="sub-menu">
+                <button data-section="webDesign">Веб-дизайн</button>
+                <button data-section="seo">Просто так</button>
+                <button data-section="marketing">Маркетинг</button>
+            </div>
+        </div>
+
+        <button data-section="portfolio">Портфолио</button>
+        <button data-section="contact">Контакты</button>
+
+        <div class="social-icons">
+            <a href="#" title="Facebook">📘</a>
+            <a href="#" title="Instagram">📸</a>
+            <a href="#" title="LinkedIn">🔗</a>
+        </div>
+
+        <!-- Переключение темы -->
+        <button id="themeToggle">Переключить тему</button>
+    </div>
+
+    <!-- Контент -->
+    <div class="content">
+        <h1>Добро пожаловать на наш сайт!</h1>
+        <div id="contentArea">
+            <p>Здесь будет содержимое выбранного раздела.</p>
+        </div>
+    </div>
+
+    <script>
+        const contentArea = document.getElementById('contentArea');
+        const themeToggle = document.getElementById('themeToggle');
+        const headerButtons = document.querySelectorAll('.header button[data-section]');
+        const body = document.body;
+
+        // Функция для загрузки контента раздела
+        function loadContent(section) {
+            let content = '';
+
+            switch (section) {
+                case 'home':
+                    content = '<h1>Главная страница</h1><p>Содержимое главной страницы...</p>';
+                    break;
+                case 'about':
+                    content = '<h1>О нас</h1><p>Информация о нашей компании...</p>';
+                    break;
+                case 'webDesign':
+                    content = '<h1>Веб-дизайн</h1><p>Наши услуги по веб-дизайну...</p>';
+                    break;
+                case 'seo':
+                    content = '<h1>SEO</h1><p>Оптимизация для поисковых систем...</p>';
+                    break;
+                case 'marketing':
+                    content = '<h1>Маркетинг</h1><p>Наши маркетинговые стратегии...</p>';
+                    break;
+                case 'portfolio':
+                    content = '<h1>Портфолио</h1><p>Примеры наших работ...</p>';
+                    break;
+                case 'contact':
+                    content = '<h1>Контакты</h1><p>Свяжитесь с нами...</p>';
+                    break;
+                default:
+                    content = '<h1>Ошибка</h1><p>Раздел не найден...</p>';
+            }
+
+            contentArea.innerHTML = content;
+        }
+
+        // Функция для активации кнопок и загрузки контента
+        function navigate(section) {
+            headerButtons.forEach(button => button.classList.remove('active'));
+            const activeButton = document.querySelector(`.header button[data-section="${section}"]`);
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
+            loadContent(section);
+        }
+
+        // Обработчик кликов по кнопкам
+        headerButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const section = button.dataset.section;
+                navigate(section);
+            });
+        });
+
+        // Функция для переключения темы
+        function toggleTheme() {
+            body.classList.toggle('dark-theme');
+            // Сохраняем тему в localStorage
+            const isDarkTheme = body.classList.contains('dark-theme');
+            localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
+        }
+
+        // При загрузке страницы
+        window.onload = () => {
+            // Проверяем, есть ли сохраненная тема в localStorage
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                body.classList.add('dark-theme');
+            }
+            // Активируем кнопку "Главная" по умолчанию
+            navigate('home');
+
+            // Добавляем слушатель на кнопку переключения темы
+            themeToggle.addEventListener('click', toggleTheme);
+        };
+    </script>
+</body>
+
+</html>
